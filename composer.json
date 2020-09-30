@@ -8,7 +8,8 @@
   },
   "autoload": {
     "psr-4": {
-      "modules\\": "modules/"
+      "modules\\": "modules/",
+      "modules\\fetchzomatomodule\\": "modules/fetchzomatomodule/src/"
     }
   },
   "config": {
