@@ -1,0 +1,17 @@
+dateModified: 1601441587
+email:
+  fromEmail: agthetpaing@hotmail.com
+  fromName: 'Top Restaurants in Melb '
+  transportType: craft\mail\transportadapters\Sendmail
+system:
+  edition: solo
+  live: true
+  name: 'Top Restaurants in Melb '
+  schemaVersion: 3.5.13
+  timeZone: America/Los_Angeles
+users:
+  allowPublicRegistration: false
+  defaultGroup: null
+  photoSubpath: null
+  photoVolumeUid: null
+  requireEmailVerification: true

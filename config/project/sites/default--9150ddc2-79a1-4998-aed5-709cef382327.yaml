@@ -1,0 +1,8 @@
+baseUrl: $PRIMARY_SITE_URL
+handle: default
+hasUrls: true
+language: en-US
+name: 'Top Restaurants in Melb '
+primary: true
+siteGroup: f31ad2cf-f11f-452e-b987-12b7c704a9e5
+sortOrder: 1
