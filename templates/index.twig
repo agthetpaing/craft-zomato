@@ -1,11 +1,34 @@
-<!DOCTYPE html>
+{% set results = craft.app.getModule('fetchzomato-module').fetch() %}
+{% extends "_layout" %}
+
+{% block content %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hi</title>
+
 </head>
 <body>
-    
+
+    <table class ="table">
+        <tr>
+            <th>Name</th>
+            <th>Url</th>
+            <th>Photo</th>
+        </tr>
+            {% for restaurant in results['restaurants'] %} 
+                {% for key, value in restaurant['restaurant'] %}
+                    <tr>
+                    {% if key == 'name' or key =='url' or key == 'featured_image' %}
+                        <td>{{value}}</td>
+                    {% endif %}
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        
+    </table>
+
+
 </body>
 </html>
+{% endblock %}

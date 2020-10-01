@@ -43,7 +43,22 @@ class FetchzomatoModule extends Module
 
     // Public Methods
 
+    public function fetch(){
+        $ch = curl_init();
 
+        curl_setopt($ch, CURLOPT_URL, 
+        'https://developers.zomato.com/api/v2.1/search?entity_id=97769&entity_type=subzone&start=0&count=20&order=asc');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Accept: application/json', 'user-key: 87ec16b7151c1dd90e80c5da5d45a131']);
+        
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        $decoded = json_decode($result, true);
+        return $decoded;
+
+        
+    }
 
     /**
      * @inheritdoc
@@ -103,6 +118,7 @@ class FetchzomatoModule extends Module
                 }
             );
         }
+
 
         Craft::$app->view->registerTwigExtension(new FetchzomatoModuleTwigExtension());
 

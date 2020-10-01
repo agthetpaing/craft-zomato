@@ -26,6 +26,7 @@ return [
         'fetchzomato-module' => [
             'class' => \modules\fetchzomatomodule\FetchzomatoModule::class,
     ],
-    'bootstrap' => ['fetchzomato-module'],
+    'bootstrap' => ['fetchzomato-module']
     //'bootstrap' => ['my-module'],
+]
 ];
