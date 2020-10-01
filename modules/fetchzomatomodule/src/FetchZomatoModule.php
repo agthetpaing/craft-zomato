@@ -1,4 +1,5 @@
 <?php
+
 /**
  * fetchzomato module for Craft CMS 3.x
  *
@@ -43,21 +44,30 @@ class FetchzomatoModule extends Module
 
     // Public Methods
 
-    public function fetch(){
-        $ch = curl_init();
+    public function fetch()
+    {
 
-        curl_setopt($ch, CURLOPT_URL, 
-        'https://developers.zomato.com/api/v2.1/search?entity_id=97769&entity_type=subzone&start=0&count=20&order=asc');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Accept: application/json', 'user-key: 87ec16b7151c1dd90e80c5da5d45a131']);
-        
-        $result = curl_exec($ch);
-        curl_close($ch);
+        try {
 
-        $decoded = json_decode($result, true);
-        return $decoded;
+            $ch = curl_init();
 
-        
+            curl_setopt(
+                $ch,
+                CURLOPT_URL,
+                'https://developers.zomato.com/api/v2.1/search?entity_id=97769&entity_type=subzone&start=0&count=20&order=asc'
+            );
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Accept: application/json', 'user-key: 87ec16b7151c1dd90e80c5da5d45a131']);
+
+            $result = curl_exec($ch);
+            curl_close($ch);
+
+            $decoded = json_decode($result, true);
+            return $decoded;
+        } catch (\Exception $ex) {
+            throw new \Exception($ex, 'The data cannot be fetched at the moment.');
+            return false;
+        }
     }
 
     /**
@@ -71,7 +81,7 @@ class FetchzomatoModule extends Module
         // Translation category
         $i18n = Craft::$app->getI18n();
         /** @noinspection UnSafeIsSetOverArrayInspection */
-        if (!isset($i18n->translations[$id]) && !isset($i18n->translations[$id.'*'])) {
+        if (!isset($i18n->translations[$id]) && !isset($i18n->translations[$id . '*'])) {
             $i18n->translations[$id] = [
                 'class' => PhpMessageSource::class,
                 'sourceLanguage' => 'en-US',
@@ -83,7 +93,7 @@ class FetchzomatoModule extends Module
 
         // Base template directory
         Event::on(View::class, View::EVENT_REGISTER_CP_TEMPLATE_ROOTS, function (RegisterTemplateRootsEvent $e) {
-            if (is_dir($baseDir = $this->getBasePath().DIRECTORY_SEPARATOR.'templates')) {
+            if (is_dir($baseDir = $this->getBasePath() . DIRECTORY_SEPARATOR . 'templates')) {
                 $e->roots[$this->id] = $baseDir;
             }
         });
@@ -111,7 +121,7 @@ class FetchzomatoModule extends Module
                         Craft::$app->getView()->registerAssetBundle(FetchzomatoModuleAsset::class);
                     } catch (InvalidConfigException $e) {
                         Craft::error(
-                            'Error registering AssetBundle - '.$e->getMessage(),
+                            'Error registering AssetBundle - ' . $e->getMessage(),
                             __METHOD__
                         );
                     }
@@ -130,7 +140,6 @@ class FetchzomatoModule extends Module
             ),
             __METHOD__
         );
-
     }
 
     // Protected Methods
